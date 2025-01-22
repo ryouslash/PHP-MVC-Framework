@@ -1,0 +1,15 @@
+{
+    "name": "ryouslash/phpmvc-framework",
+    "authors": [
+        {
+            "name": "池田 遼",
+            "email": "ryouslash@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
