@@ -1,10 +1,8 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use app\core\Application;
-
-echo "Hello World";
 
 $app = new Application();
 
@@ -15,6 +13,5 @@ $app->router->get('/', function () {
 $app->router->get('/contact', function () {
   return 'Contact World';
 });
-
 
 $app->run();
