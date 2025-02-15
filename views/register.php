@@ -12,4 +12,4 @@
 <?php echo $form->field($model, 'password') ?>
 <?php echo $form->field($model, 'confirmPassword') ?>
 <button type="submit" class="btn btn-primary">Submit</button>
-<?php $form = \app\core\form\Form::end() ?>さfd
+<?php $form = \app\core\form\Form::end() ?>
