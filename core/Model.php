@@ -46,7 +46,7 @@ abstract class Model
           $this->addError($attribute, self::RULE_MIN, $rule);
         }
 
-        if ($ruleName === self::RULE_MAX && strlen($value) < $rule['max']) {
+        if ($ruleName === self::RULE_MAX && strlen($value) > $rule['max']) {
           $this->addError($attribute, self::RULE_MAX, $rule);
         }
 
