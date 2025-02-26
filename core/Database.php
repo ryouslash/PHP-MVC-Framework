@@ -17,7 +17,29 @@ class Database
   public function applyMigrations()
   {
     $this->createMigrationsTable();
-    $this->getAppliedMigrations();
+    $appliedMigrations = $this->getAppliedMigrations();
+
+    $newMigrations = [],
+
+    $files = scandir(Application::$ROOT_DIR . '/migrations');
+    $toArrayMigrations = array_diff($files, $appliedMigrations);
+    foreach ($toArrayMigrations as $migration) {
+      if ($migration === '.' || $migration === '..') {
+        continue;
+      }
+
+      require_once Application::$ROOT_DIR . '/migrations/' . $migration;
+      $className = pathInfo($migration, PATHINFO_FILENAME);
+      $instance = new $className;
+      $instance->up();
+      $newMigrations[] = $migration;
+    }
+
+    if(empty($newMigrations)){
+      $this->saveMigrations($newMigrations);
+    } else {
+      echo "All migrations are applied";
+    }
   }
 
   public function createMigrationsTable()
