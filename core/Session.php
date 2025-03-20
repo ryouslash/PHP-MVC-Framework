@@ -10,15 +10,11 @@ class Session
     session_start();
     $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
 
-    foreach ($flashMessages as $key => $flashMessage) {
-      // Mark to be removed
+    foreach ($flashMessages as $key => &$flashMessage) { // 参照渡しにする
       $flashMessage['remove'] = true;
     }
 
-    echo '<pre>';
-    var_dump($flashMessages);
-    echo '</pre>';
-    $_SESSION[self::FLASH_KEY] = $flashMessages;
+    $_SESSION[self::FLASH_KEY] = $flashMessages; // 修正後のデータを再代入
   }
 
 
@@ -30,10 +26,21 @@ class Session
     ];
   }
 
-  public function getFlash($key) {}
+  public function getFlash($key)
+  {
+    return $_SESSION[self::FLASH_KEY][$key]['value'] ?? false;
+  }
 
   public function __destruct()
   {
-    //Iterate over marked 
+    $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
+
+    foreach ($flashMessages as $key => &$flashMessage) {
+      if ($flashMessage['remove']) {
+        unset($flashMessages[$key]);
+      }
+    }
+
+    $_SESSION[self::FLASH_KEY] = $flashMessages; // 修正後のデータを再代入
   }
 }
